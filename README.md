@@ -4,6 +4,13 @@ DOS PC의 MT-32 MIDI 출력을 Android 기기에서 실시간으로 에뮬레이
 [munt/mt32emu](https://github.com/munt/munt) 라이브러리를 Android에 포팅하였으며,  
 ESP32를 경유한 RTP-MIDI(Wi-Fi) 또는 USB-MIDI 두 가지 연결 방식을 지원합니다.
 
+
+
+
+
+
+
+
 ---
 
 ## 🎮 시스템 구성
