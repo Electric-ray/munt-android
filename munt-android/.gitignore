@@ -1,0 +1,20 @@
+# Android
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+*.jks
+
+# Android APK (배포용은 Releases에)
+*.apk
+*.aab
+
+# MT-32 ROM (저작권으로 미포함)
+*.ROM
+*.rom
+munt_roms/

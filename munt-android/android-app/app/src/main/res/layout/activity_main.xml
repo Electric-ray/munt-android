@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0d0d1a"
+    android:padding="8dp">
+
+    <!-- 타이틀 + 버튼 -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical" android:paddingBottom="5dp">
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1" android:text="🎹 MT-32"
+            android:textColor="#e0e0ff" android:textSize="20sp" android:textStyle="bold"/>
+        <Button android:id="@+id/btnRtp"
+            android:layout_width="wrap_content" android:layout_height="38dp"
+            android:text="RTP" android:textSize="12sp" android:layout_marginEnd="4dp"
+            android:paddingStart="12dp" android:paddingEnd="12dp"/>
+        <Button android:id="@+id/btnUsb"
+            android:layout_width="wrap_content" android:layout_height="38dp"
+            android:text="USB" android:textSize="12sp" android:layout_marginEnd="4dp"
+            android:paddingStart="12dp" android:paddingEnd="12dp"/>
+        <Button android:id="@+id/btnReset"
+            android:layout_width="wrap_content" android:layout_height="38dp"
+            android:text="RST" android:textSize="12sp"
+            android:paddingStart="12dp" android:paddingEnd="12dp"/>
+    </LinearLayout>
+
+    <!-- MIDI 카운터 -->
+    <TextView android:id="@+id/tvCounter"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="MIDI:0  SysEx:0  ■"
+        android:textColor="#aaaacc" android:textSize="11sp" android:fontFamily="monospace"
+        android:paddingBottom="5dp"/>
+
+    <!-- 파트 그리드 (3×3) -->
+    <GridLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:columnCount="3" android:rowCount="3" android:paddingBottom="5dp">
+
+        <LinearLayout android:id="@+id/part0" android:layout_width="0dp" android:layout_height="52dp"
+            android:layout_columnWeight="1" android:orientation="horizontal" android:background="#1a1a2e"
+            android:layout_margin="2dp" android:gravity="center_vertical" android:padding="4dp">
+            <View android:id="@+id/led0" android:layout_width="10dp" android:layout_height="10dp" android:background="#333355" android:layout_marginEnd="4dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="P1" android:textColor="#8888aa" android:textSize="9sp"/>
+                <TextView android:id="@+id/tvPatch0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="---" android:textColor="#ccccee" android:textSize="10sp" android:ellipsize="end" android:maxLines="1"/></LinearLayout></LinearLayout>
+
+        <LinearLayout android:id="@+id/part1" android:layout_width="0dp" android:layout_height="52dp"
+            android:layout_columnWeight="1" android:orientation="horizontal" android:background="#1a1a2e"
+            android:layout_margin="2dp" android:gravity="center_vertical" android:padding="4dp">
+            <View android:id="@+id/led1" android:layout_width="10dp" android:layout_height="10dp" android:background="#333355" android:layout_marginEnd="4dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="P2" android:textColor="#8888aa" android:textSize="9sp"/>
+                <TextView android:id="@+id/tvPatch1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="---" android:textColor="#ccccee" android:textSize="10sp" android:ellipsize="end" android:maxLines="1"/></LinearLayout></LinearLayout>
+
+        <LinearLayout android:id="@+id/part2" android:layout_width="0dp" android:layout_height="52dp"
+            android:layout_columnWeight="1" android:orientation="horizontal" android:background="#1a1a2e"
+            android:layout_margin="2dp" android:gravity="center_vertical" android:padding="4dp">
+            <View android:id="@+id/led2" android:layout_width="10dp" android:layout_height="10dp" android:background="#333355" android:layout_marginEnd="4dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="P3" android:textColor="#8888aa" android:textSize="9sp"/>
+                <TextView android:id="@+id/tvPatch2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="---" android:textColor="#ccccee" android:textSize="10sp" android:ellipsize="end" android:maxLines="1"/></LinearLayout></LinearLayout>
+
+        <LinearLayout android:id="@+id/part3" android:layout_width="0dp" android:layout_height="52dp"
+            android:layout_columnWeight="1" android:orientation="horizontal" android:background="#1a1a2e"
+            android:layout_margin="2dp" android:gravity="center_vertical" android:padding="4dp">
+            <View android:id="@+id/led3" android:layout_width="10dp" android:layout_height="10dp" android:background="#333355" android:layout_marginEnd="4dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="P4" android:textColor="#8888aa" android:textSize="9sp"/>
+                <TextView android:id="@+id/tvPatch3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="---" android:textColor="#ccccee" android:textSize="10sp" android:ellipsize="end" android:maxLines="1"/></LinearLayout></LinearLayout>
+
+        <LinearLayout android:id="@+id/part4" android:layout_width="0dp" android:layout_height="52dp"
+            android:layout_columnWeight="1" android:orientation="horizontal" android:background="#1a1a2e"
+            android:layout_margin="2dp" android:gravity="center_vertical" android:padding="4dp">
+            <View android:id="@+id/led4" android:layout_width="10dp" android:layout_height="10dp" android:background="#333355" android:layout_marginEnd="4dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="P5" android:textColor="#8888aa" android:textSize="9sp"/>
+                <TextView android:id="@+id/tvPatch4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="---" android:textColor="#ccccee" android:textSize="10sp" android:ellipsize="end" android:maxLines="1"/></LinearLayout></LinearLayout>
+
+        <LinearLayout android:id="@+id/part5" android:layout_width="0dp" android:layout_height="52dp"
+            android:layout_columnWeight="1" android:orientation="horizontal" android:background="#1a1a2e"
+            android:layout_margin="2dp" android:gravity="center_vertical" android:padding="4dp">
+            <View android:id="@+id/led5" android:layout_width="10dp" android:layout_height="10dp" android:background="#333355" android:layout_marginEnd="4dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="P6" android:textColor="#8888aa" android:textSize="9sp"/>
+                <TextView android:id="@+id/tvPatch5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="---" android:textColor="#ccccee" android:textSize="10sp" android:ellipsize="end" android:maxLines="1"/></LinearLayout></LinearLayout>
+
+        <LinearLayout android:id="@+id/part6" android:layout_width="0dp" android:layout_height="52dp"
+            android:layout_columnWeight="1" android:orientation="horizontal" android:background="#1a1a2e"
+            android:layout_margin="2dp" android:gravity="center_vertical" android:padding="4dp">
+            <View android:id="@+id/led6" android:layout_width="10dp" android:layout_height="10dp" android:background="#333355" android:layout_marginEnd="4dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="P7" android:textColor="#8888aa" android:textSize="9sp"/>
+                <TextView android:id="@+id/tvPatch6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="---" android:textColor="#ccccee" android:textSize="10sp" android:ellipsize="end" android:maxLines="1"/></LinearLayout></LinearLayout>
+
+        <LinearLayout android:id="@+id/part7" android:layout_width="0dp" android:layout_height="52dp"
+            android:layout_columnWeight="1" android:orientation="horizontal" android:background="#1a1a2e"
+            android:layout_margin="2dp" android:gravity="center_vertical" android:padding="4dp">
+            <View android:id="@+id/led7" android:layout_width="10dp" android:layout_height="10dp" android:background="#333355" android:layout_marginEnd="4dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="P8" android:textColor="#8888aa" android:textSize="9sp"/>
+                <TextView android:id="@+id/tvPatch7" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="---" android:textColor="#ccccee" android:textSize="10sp" android:ellipsize="end" android:maxLines="1"/></LinearLayout></LinearLayout>
+
+        <LinearLayout android:id="@+id/part8" android:layout_width="0dp" android:layout_height="52dp"
+            android:layout_columnWeight="1" android:orientation="horizontal" android:background="#1a0d0d"
+            android:layout_margin="2dp" android:gravity="center_vertical" android:padding="4dp">
+            <View android:id="@+id/led8" android:layout_width="10dp" android:layout_height="10dp" android:background="#332222" android:layout_marginEnd="4dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="RHY" android:textColor="#aa8888" android:textSize="9sp"/>
+                <TextView android:id="@+id/tvPatch8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="---" android:textColor="#eeaaaa" android:textSize="10sp" android:ellipsize="end" android:maxLines="1"/></LinearLayout></LinearLayout>
+
+    </GridLayout>
+
+    <ScrollView android:id="@+id/svLog"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:background="#060612" android:padding="6dp">
+        <TextView android:id="@+id/tvLog"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textColor="#00cc66" android:textSize="11sp" android:fontFamily="monospace"
+            android:text="[RTP: DOS_MIDI AP 연결 후 RTP 버튼]\n[USB: 어댑터 연결 후 USB 버튼]\n"/>
+    </ScrollView>
+
+</LinearLayout>
