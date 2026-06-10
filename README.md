@@ -59,6 +59,7 @@ munt-android/
 ### 1. ESP32 펌웨어
 
 **준비물:** Arduino IDE, ESP32 보드 패키지, lathoub/Arduino-AppleMIDI-Library
+(제 다른 저장소의 comMIDI를 안드로이드에 맞춰서 패치했습니다)
 
 ```
 Arduino IDE → 파일 → 열기 → dos_midi_v4.ino
