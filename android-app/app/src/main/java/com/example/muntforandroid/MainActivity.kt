@@ -1,10 +1,15 @@
 package com.example.muntforandroid
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -103,16 +108,60 @@ class MainActivity : AppCompatActivity() {
     private fun checkAndInit(onReady: () -> Unit) {
         if (synthReady) { onReady(); return }
         pendingAction = onReady
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-            != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQ_STORAGE)
-        } else runInit(onReady)
+
+        // Android 11 (API 30, R) 이상인 경우 Scoped Storage 정책 우회를 위해 MANAGE_EXTERNAL_STORAGE 확인
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()) {
+                log("⚠️ 롬파일을 읽으려면 '모든 파일 관리 권한'이 필요합니다. 설정 창으로 이동합니다.")
+                try {
+                    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
+                        addCategory("android.intent.category.DEFAULT")
+                        data = Uri.parse("package:$packageName")
+                    }
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                    startActivity(intent)
+                }
+            } else {
+                runInit(onReady)
+            }
+        } else {
+            // Android 10 이하 기기를 위한 기존 일반 저장소 권한 요청 코드
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQ_STORAGE)
+            } else {
+                runInit(onReady)
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(rc: Int, p: Array<String>, g: IntArray) {
         super.onRequestPermissionsResult(rc, p, g)
-        if (rc == REQ_STORAGE) runInit(pendingAction ?: {})
+        if (rc == REQ_STORAGE) {
+            if (g.isNotEmpty() && g[0] == PackageManager.PERMISSION_GRANTED) {
+                runInit(pendingAction ?: {})
+            } else {
+                log("❌ 저장소 접근 권한이 거부되었습니다.")
+            }
+        }
+    }
+
+    // 모든 파일 접근 권한 승인 후 복귀했을 때 자동으로 이니셜라이즈를 시도하기 위한 보완
+    override fun onResume() {
+        super.onResume()
+        handler.post(statsRunnable)
+
+        // 설정창에서 권한을 허용하고 복귀한 경우, 펜딩된 액션이 있다면 초기화 진행
+        if (!synthReady && pendingAction != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                if (Environment.isExternalStorageManager()) {
+                    runInit(pendingAction ?: {})
+                }
+            }
+        }
     }
 
     private fun runInit(onReady: () -> Unit) {
@@ -120,8 +169,13 @@ class MainActivity : AppCompatActivity() {
         Thread {
             val ok = engine.initSynth()
             runOnUiThread {
-                if (ok) { synthReady = true; log("✅ munt 초기화 완료"); onReady() }
-                else log("❌ ROM 없음: /sdcard/Download/munt_roms/ 확인")
+                if (ok) {
+                    synthReady = true
+                    log("✅ munt 초기화 완료")
+                    onReady()
+                } else {
+                    log("❌ ROM 없음: /sdcard/Download/munt_roms/ 확인")
+                }
             }
         }.start()
     }
@@ -142,7 +196,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume()  { super.onResume();  handler.post(statsRunnable) }
     override fun onPause()   { super.onPause();   handler.removeCallbacks(statsRunnable) }
     override fun onDestroy() { super.onDestroy(); engine.stop() }
 
